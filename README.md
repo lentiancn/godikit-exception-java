@@ -28,7 +28,7 @@ English
 <dependency>
     <groupId>com.godikit.error</groupId>
     <artifactId>godikit-error</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
