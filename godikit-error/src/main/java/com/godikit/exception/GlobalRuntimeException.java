@@ -47,14 +47,18 @@ public class GlobalRuntimeException extends RuntimeException {
      * The associated error code.
      */
     private final ErrorCode errorCode;
+    /**
+     * Indicates whether the error is retryable.
+     */
+    private boolean isRetryable;
 
     /**
      * Default constructor with SYSTEM_ERROR.
      */
     public GlobalRuntimeException() {
         super();
-        errorSource = "unknown";
-        errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.errorSource = "unknown";
+        this.errorCode = BaseErrorCode.SYSTEM_ERROR;
     }
 
     /**
@@ -66,6 +70,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()));
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -78,6 +83,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()), cause);
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -89,6 +95,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(cause);
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -100,6 +107,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null));
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -112,6 +120,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)));
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -125,6 +134,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)), cause);
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -137,6 +147,7 @@ public class GlobalRuntimeException extends RuntimeException {
         super(cause);
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -147,8 +158,9 @@ public class GlobalRuntimeException extends RuntimeException {
      */
     public GlobalRuntimeException(String message, String code) {
         super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()));
-        errorSource = "unknown";
-        errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.errorSource = "unknown";
+        this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.isRetryable = false;
     }
 
     /**
@@ -160,8 +172,9 @@ public class GlobalRuntimeException extends RuntimeException {
      */
     public GlobalRuntimeException(String message, Throwable cause, String code) {
         super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()), cause);
-        errorSource = "unknown";
-        errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.errorSource = "unknown";
+        this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.isRetryable = false;
     }
 
     /**
@@ -172,8 +185,20 @@ public class GlobalRuntimeException extends RuntimeException {
      */
     public GlobalRuntimeException(Throwable cause, String code) {
         super(cause);
-        errorSource = "unknown";
-        errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.errorSource = "unknown";
+        this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.isRetryable = false;
+    }
+
+    /**
+     * Sets the retryable flag for this exception.
+     *
+     * @param retryable the retryable flag value
+     * @return this exception instance
+     */
+    public GlobalRuntimeException setRetryable(boolean retryable) {
+        this.isRetryable = retryable;
+        return this;
     }
 
     /**
@@ -190,7 +215,7 @@ public class GlobalRuntimeException extends RuntimeException {
                 exception.getMessage(),
                 exception.getCause(),
                 exception.getErrorCode()
-        );
+        ).setRetryable(exception.isRetryable);
     }
 
     /**

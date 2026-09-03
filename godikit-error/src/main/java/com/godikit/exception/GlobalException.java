@@ -47,14 +47,19 @@ public class GlobalException extends Exception {
      * The associated error code.
      */
     private final ErrorCode errorCode;
+    /**
+     * Indicates whether the error is retryable.
+     */
+    private boolean isRetryable;
 
     /**
      * Default constructor with SYSTEM_ERROR.
      */
     public GlobalException() {
         super();
-        errorSource = "unknown";
-        errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.errorSource = "unknown";
+        this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -66,6 +71,7 @@ public class GlobalException extends Exception {
         super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()));
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -78,6 +84,7 @@ public class GlobalException extends Exception {
         super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()), cause);
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -89,6 +96,7 @@ public class GlobalException extends Exception {
         super(cause);
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
+        this.isRetryable = false;
     }
 
     /**
@@ -100,6 +108,7 @@ public class GlobalException extends Exception {
         super(Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null));
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -112,6 +121,7 @@ public class GlobalException extends Exception {
         super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)));
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -125,6 +135,7 @@ public class GlobalException extends Exception {
         super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)), cause);
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -137,6 +148,7 @@ public class GlobalException extends Exception {
         super(cause);
         this.errorSource = "unknown";
         this.errorCode = errorCode;
+        this.isRetryable = false;
     }
 
     /**
@@ -147,8 +159,9 @@ public class GlobalException extends Exception {
      */
     public GlobalException(String message, String code) {
         super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()));
-        errorSource = "unknown";
-        errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.errorSource = "unknown";
+        this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.isRetryable = false;
     }
 
     /**
@@ -160,8 +173,9 @@ public class GlobalException extends Exception {
      */
     public GlobalException(String message, Throwable cause, String code) {
         super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()), cause);
-        errorSource = "unknown";
-        errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.errorSource = "unknown";
+        this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.isRetryable = false;
     }
 
     /**
@@ -172,8 +186,20 @@ public class GlobalException extends Exception {
      */
     public GlobalException(Throwable cause, String code) {
         super(cause);
-        errorSource = "unknown";
-        errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.errorSource = "unknown";
+        this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
+        this.isRetryable = false;
+    }
+
+    /**
+     * Sets the retryable flag for this exception.
+     *
+     * @param retryable the retryable flag value
+     * @return this exception instance
+     */
+    public GlobalException setRetryable(boolean retryable) {
+        this.isRetryable = retryable;
+        return this;
     }
 
     /**
@@ -190,7 +216,7 @@ public class GlobalException extends Exception {
                 exception.getMessage(),
                 exception.getCause(),
                 exception.getErrorCode()
-        );
+        ).setRetryable(exception.isRetryable);
     }
 
     /**
