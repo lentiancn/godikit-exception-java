@@ -192,17 +192,6 @@ public class GlobalException extends Exception {
     }
 
     /**
-     * Sets the retryable flag for this exception.
-     *
-     * @param retryable the retryable flag value
-     * @return this exception instance
-     */
-    public GlobalException setRetryable(boolean retryable) {
-        this.isRetryable = retryable;
-        return this;
-    }
-
-    /**
      * Converts this checked exception to a runtime exception.
      *
      * @param exception the exception to convert
@@ -217,6 +206,17 @@ public class GlobalException extends Exception {
                 exception.getCause(),
                 exception.getErrorCode()
         ).setRetryable(exception.isRetryable);
+    }
+
+    /**
+     * Sets the retryable flag for this exception.
+     *
+     * @param retryable the retryable flag value
+     * @return this exception instance
+     */
+    public GlobalException setRetryable(boolean retryable) {
+        this.isRetryable = retryable;
+        return this;
     }
 
     /**
