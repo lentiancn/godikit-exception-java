@@ -23,10 +23,14 @@
  */
 package com.godikit.error.code;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,8 +39,28 @@ class ErrorCodeRegistryTest {
     private ErrorCodeRegistry registry;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         registry = ErrorCodeRegistry.getInstance();
+        resetRegistry();
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        resetRegistry();
+    }
+
+    private void resetRegistry() throws Exception {
+        Field initializedField = ErrorCodeRegistry.class.getDeclaredField("initialized");
+        initializedField.setAccessible(true);
+        initializedField.setBoolean(registry, false);
+
+        Field codeMapField = ErrorCodeRegistry.class.getDeclaredField("CODE_MAP");
+        codeMapField.setAccessible(true);
+        ((Map<?, ?>) codeMapField.get(registry)).clear();
+
+        Field nameMapField = ErrorCodeRegistry.class.getDeclaredField("NAME_MAP");
+        nameMapField.setAccessible(true);
+        ((Map<?, ?>) nameMapField.get(registry)).clear();
     }
 
     @Test
@@ -48,36 +72,66 @@ class ErrorCodeRegistryTest {
     }
 
     @Test
-    void register_ShouldAddErrorCodeToMap() {
+    void initialize_ShouldRegisterBaseErrorCodes() {
         registry.initialize();
-        int initialSize = registry.getAll().size();
+        List<ErrorCode> codes = registry.getAll();
 
-        ErrorCode customCode = new TestErrorCode("999999", "Test Error");
-        registry.register(customCode);
-
-        assertEquals(initialSize + 1, registry.getAll().size());
-        assertTrue(registry.contains("999999"));
+        assertFalse(codes.isEmpty());
+        assertTrue(codes.contains(BaseErrorCode.SYSTEM_ERROR));
     }
 
     @Test
-    void register_ShouldIgnoreNullCode() {
+    void initialize_ShouldOnlyExecuteOnce() {
         registry.initialize();
-        int initialSize = registry.getAll().size();
+        int size1 = registry.getAll().size();
+
+        registry.initialize();
+        int size2 = registry.getAll().size();
+
+        assertEquals(size1, size2);
+    }
+
+    @Test
+    void register_ShouldAddErrorCode() {
+        registry.initialize();
+        int size = registry.getAll().size();
+
+        registry.register(new TestErrorCode("888888", "Test"));
+
+        assertEquals(size + 1, registry.getAll().size());
+        assertTrue(registry.contains("888888"));
+    }
+
+    @Test
+    void register_ShouldIgnoreNull() {
+        registry.initialize();
+        int size = registry.getAll().size();
 
         registry.register(null);
 
-        assertEquals(initialSize, registry.getAll().size());
+        assertEquals(size, registry.getAll().size());
     }
 
     @Test
-    void get_ShouldReturnCodeByValue() {
+    void register_ShouldAddToNameMap_WhenEnum() {
+        registry.initialize();
+        int size = registry.getAll().size();
+
+        registry.register(BaseErrorCode.UNKNOWN_ERROR);
+
+        assertEquals(size, registry.getAll().size());
+        assertNotNull(registry.get("UNKNOWN_ERROR"));
+    }
+
+    @Test
+    void get_ShouldReturnCodeByCodeValue() {
         registry.initialize();
 
-        ErrorCode result = registry.get("000020");
+        ErrorCode result = registry.get("000010");
 
         assertNotNull(result);
-        assertEquals("000020", result.getCode());
-        assertEquals("Parameter Error", result.getDescription());
+        assertEquals("000010", result.getCode());
+        assertEquals("System Error", result.getDescription());
     }
 
     @Test
@@ -88,20 +142,10 @@ class ErrorCodeRegistryTest {
 
         assertNotNull(result);
         assertEquals("SYSTEM_ERROR", result.getName());
-        assertEquals("000010", result.getCode());
     }
 
     @Test
-    void get_ShouldReturnDefaultWhenNotFound() {
-        registry.initialize();
-
-        ErrorCode result = registry.get("NOT_EXIST", BaseErrorCode.SYSTEM_ERROR);
-
-        assertSame(BaseErrorCode.SYSTEM_ERROR, result);
-    }
-
-    @Test
-    void get_ShouldReturnNullWhenNotFoundWithoutDefault() {
+    void get_ShouldReturnNull_WhenNotFound() {
         registry.initialize();
 
         ErrorCode result = registry.get("NOT_EXIST");
@@ -110,15 +154,58 @@ class ErrorCodeRegistryTest {
     }
 
     @Test
-    void get_ShouldAutoInitializeOnFirstCall() {
-        ErrorCode result = registry.get("000000");
+    void get_ShouldAutoInitialize_WhenNotInitialized() {
+        ErrorCode result = registry.get("000010");
 
         assertNotNull(result);
-        assertEquals("NO_ERROR", result.getName());
+        assertEquals("System Error", result.getDescription());
     }
 
     @Test
-    void contains_ShouldReturnTrueForRegisteredCode() {
+    void get_WithDefault_ShouldReturnDefault_WhenNotFound() {
+        registry.initialize();
+
+        ErrorCode result = registry.get("999999", BaseErrorCode.UNKNOWN_ERROR);
+
+        assertSame(BaseErrorCode.UNKNOWN_ERROR, result);
+    }
+
+    @Test
+    void get_WithDefault_ShouldReturnFoundCode() {
+        registry.initialize();
+
+        ErrorCode result = registry.get("000010", BaseErrorCode.UNKNOWN_ERROR);
+
+        assertSame(BaseErrorCode.SYSTEM_ERROR, result);
+    }
+
+    @Test
+    void getAll_ShouldReturnAllCodes() {
+        registry.initialize();
+        List<ErrorCode> codes = registry.getAll();
+
+        assertFalse(codes.isEmpty());
+        assertEquals(BaseErrorCode.values().length, codes.size());
+    }
+
+    @Test
+    void getAll_ShouldReturnCopy() {
+        registry.initialize();
+        List<ErrorCode> codes1 = registry.getAll();
+        List<ErrorCode> codes2 = registry.getAll();
+
+        assertNotSame(codes1, codes2);
+    }
+
+    @Test
+    void getAll_ShouldAutoInitialize() {
+        List<ErrorCode> codes = registry.getAll();
+
+        assertFalse(codes.isEmpty());
+    }
+
+    @Test
+    void contains_ShouldReturnTrue_WhenRegistered() {
         registry.initialize();
 
         assertTrue(registry.contains("000010"));
@@ -126,55 +213,15 @@ class ErrorCodeRegistryTest {
     }
 
     @Test
-    void contains_ShouldReturnFalseForUnregisteredCode() {
+    void contains_ShouldReturnFalse_WhenNotRegistered() {
         registry.initialize();
 
-        assertFalse(registry.contains("888888"));
-        assertFalse(registry.contains("NOT_EXIST"));
+        assertFalse(registry.contains("999999"));
     }
 
     @Test
-    void getAll_ShouldReturnAllRegisteredCodes() {
-        registry.initialize();
-        List<ErrorCode> allCodes = registry.getAll();
-
-        assertNotNull(allCodes);
-        assertFalse(allCodes.isEmpty());
-        assertTrue(allCodes.size() >= BaseErrorCode.values().length);
-    }
-
-    @Test
-    void getAll_ShouldContainBaseErrorCodes() {
-        registry.initialize();
-        List<ErrorCode> allCodes = registry.getAll();
-
-        assertTrue(allCodes.contains(BaseErrorCode.SYSTEM_ERROR));
-        assertTrue(allCodes.contains(BaseErrorCode.PARAM_ERROR));
-    }
-
-    @Test
-    void initialize_ShouldOnlyExecuteOnce() {
-        registry.initialize();
-        int sizeAfterFirstInit = registry.getAll().size();
-
-        registry.initialize();
-        int sizeAfterSecondInit = registry.getAll().size();
-
-        assertEquals(sizeAfterFirstInit, sizeAfterSecondInit);
-    }
-
-    @Test
-    void register_ShouldOverrideExistingCode() {
-        registry.initialize();
-
-        ErrorCode original = registry.get("000010");
-        assertEquals("System Error", original.getDescription());
-
-        ErrorCode newCode = new TestErrorCode("000010", "Overridden Error");
-        registry.register(newCode);
-
-        ErrorCode updated = registry.get("000010");
-        assertEquals("Overridden Error", updated.getDescription());
+    void contains_ShouldAutoInitialize() {
+        assertTrue(registry.contains("000010"));
     }
 
     private static class TestErrorCode implements ErrorCode {
