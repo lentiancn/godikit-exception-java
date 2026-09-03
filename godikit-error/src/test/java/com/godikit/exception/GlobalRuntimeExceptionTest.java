@@ -50,7 +50,7 @@ class GlobalRuntimeExceptionTest {
 
     @Test
     void messageConstructor_ShouldFallbackToSystemError_WhenMessageIsNull() {
-        GlobalRuntimeException ex = new GlobalRuntimeException((String)null);
+        GlobalRuntimeException ex = new GlobalRuntimeException((String) null);
 
         assertEquals(BaseErrorCode.SYSTEM_ERROR.getDescription(), ex.getMessage());
     }
