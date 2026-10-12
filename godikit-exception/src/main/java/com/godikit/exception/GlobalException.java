@@ -29,30 +29,41 @@ import lombok.Getter;
 
 import java.util.Optional;
 
-import static com.godikit.exception.utils.StringUtils.defaultIfNull;
+import static com.godikit.exception.utils.StringUtils.defaultIfBlank;
 
 /**
  * Checked exception for Godikit framework.
  * Carries error source information and associated error code.
+ *
+ * @apiNote This is a checked exception suitable for recoverable errors.
+ *          For unrecoverable errors, consider using {@link GlobalRuntimeException}.
+ * @see GlobalRuntimeException
+ * @since 1.0.0
  */
 @Getter
 public class GlobalException extends Exception {
 
     /**
-     * The source/origin where the error occurred.
+     * The source or origin module/class where the error occurred.
+     * Defaults to {@code "unknown"} when not explicitly provided.
+     *
+     * @apiNote This field is currently reserved for future use.
      */
     private final String errorSource;
     /**
-     * The associated error code.
+     * The associated error code for categorizing the exception.
+     * May be null if no error code was provided during construction.
      */
     private final ErrorCode errorCode;
     /**
      * Indicates whether the error is retryable.
+     * Can be modified via {@link #setRetryable(boolean)} after construction.
      */
     private boolean isRetryable;
 
     /**
-     * Default constructor with SYSTEM_ERROR.
+     * Default constructor that creates an exception with SYSTEM_ERROR.
+     * The error source defaults to "unknown" and retryable is false.
      */
     public GlobalException() {
         super();
@@ -62,25 +73,26 @@ public class GlobalException extends Exception {
     }
 
     /**
-     * Constructs an exception with a message.
+     * Constructs an exception with a custom message.
+     * If message is null, falls back to SYSTEM_ERROR description.
      *
-     * @param message the error message
+     * @param message the error message, may be null
      */
     public GlobalException(String message) {
-        super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()));
+        super(defaultIfBlank(message, BaseErrorCode.SYSTEM_ERROR.getDescription()));
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
         this.isRetryable = false;
     }
 
     /**
-     * Constructs an exception with message and cause.
+     * Constructs an exception with both message and cause.
      *
-     * @param message the error message
-     * @param cause   the underlying cause
+     * @param message the error message, may be null
+     * @param cause   the underlying cause of this exception, may be null
      */
     public GlobalException(String message, Throwable cause) {
-        super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()), cause);
+        super(defaultIfBlank(message, BaseErrorCode.SYSTEM_ERROR.getDescription()), cause);
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
         this.isRetryable = false;
@@ -88,8 +100,9 @@ public class GlobalException extends Exception {
 
     /**
      * Constructs an exception from a cause.
+     * The message will be derived from the cause's message.
      *
-     * @param cause the underlying cause
+     * @param cause the underlying cause of this exception, may be null
      */
     public GlobalException(Throwable cause) {
         super(cause);
@@ -99,9 +112,9 @@ public class GlobalException extends Exception {
     }
 
     /**
-     * Constructs an exception with an error code.
+     * Constructs an exception with only an error code.
      *
-     * @param errorCode the error code
+     * @param errorCode the error code, may be null
      */
     public GlobalException(ErrorCode errorCode) {
         super(Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null));
@@ -111,13 +124,13 @@ public class GlobalException extends Exception {
     }
 
     /**
-     * Constructs an exception with message and error code.
+     * Constructs an exception with both message and error code.
      *
-     * @param message   the error message
-     * @param errorCode the error code
+     * @param message   the error message, may be null
+     * @param errorCode the error code, may be null
      */
     public GlobalException(String message, ErrorCode errorCode) {
-        super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)));
+        super(defaultIfBlank(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)));
         this.errorSource = "unknown";
         this.errorCode = errorCode;
         this.isRetryable = false;
@@ -126,12 +139,12 @@ public class GlobalException extends Exception {
     /**
      * Constructs an exception with message, cause, and error code.
      *
-     * @param message   the error message
-     * @param cause     the underlying cause
-     * @param errorCode the error code
+     * @param message   the error message, may be null
+     * @param cause     the underlying cause of this exception, may be null
+     * @param errorCode the error code, may be null
      */
     public GlobalException(String message, Throwable cause, ErrorCode errorCode) {
-        super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)), cause);
+        super(defaultIfBlank(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)), cause);
         this.errorSource = "unknown";
         this.errorCode = errorCode;
         this.isRetryable = false;
@@ -140,8 +153,8 @@ public class GlobalException extends Exception {
     /**
      * Constructs an exception with cause and error code.
      *
-     * @param cause     the underlying cause
-     * @param errorCode the error code
+     * @param cause     the underlying cause of this exception, may be null
+     * @param errorCode the error code, may be null
      */
     public GlobalException(Throwable cause, ErrorCode errorCode) {
         super(cause);
@@ -152,12 +165,13 @@ public class GlobalException extends Exception {
 
     /**
      * Constructs an exception with message and error code string.
+     * The code is looked up in the ErrorCodeRegistry.
      *
-     * @param message the error message
-     * @param code    the error code value
+     * @param message the error message, may be null
+     * @param code    the error code value to lookup in registry
      */
     public GlobalException(String message, String code) {
-        super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()));
+        super(defaultIfBlank(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()));
         this.errorSource = "unknown";
         this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
         this.isRetryable = false;
@@ -171,7 +185,7 @@ public class GlobalException extends Exception {
      * @param code    the error code value
      */
     public GlobalException(String message, Throwable cause, String code) {
-        super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()), cause);
+        super(defaultIfBlank(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()), cause);
         this.errorSource = "unknown";
         this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
         this.isRetryable = false;

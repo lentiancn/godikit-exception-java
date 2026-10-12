@@ -29,25 +29,35 @@ import lombok.Getter;
 
 import java.util.Optional;
 
-import static com.godikit.exception.utils.StringUtils.defaultIfNull;
+import static com.godikit.exception.utils.StringUtils.defaultIfBlank;
 
 /**
  * Unchecked runtime exception for Godikit framework.
  * Carries error source information and associated error code.
+ *
+ * @apiNote This is an unchecked exception suitable for programming errors
+ *          and unrecoverable failures. For recoverable errors, consider {@link GlobalException}.
+ * @see GlobalException
+ * @since 1.0.0
  */
 @Getter
 public class GlobalRuntimeException extends RuntimeException {
 
     /**
-     * The source/origin where the error occurred.
+     * The source or origin module/class where the error occurred.
+     * Defaults to {@code "unknown"} when not explicitly provided.
+     *
+     * @apiNote This field is currently reserved for future use.
      */
     private final String errorSource;
     /**
-     * The associated error code.
+     * The associated error code for categorizing the exception.
+     * May be null if no error code was provided during construction.
      */
     private final ErrorCode errorCode;
     /**
      * Indicates whether the error is retryable.
+     * Can be modified via {@link #setRetryable(boolean)} after construction.
      */
     private boolean isRetryable;
 
@@ -66,7 +76,7 @@ public class GlobalRuntimeException extends RuntimeException {
      * @param message the error message
      */
     public GlobalRuntimeException(String message) {
-        super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()));
+        super(defaultIfBlank(message, BaseErrorCode.SYSTEM_ERROR.getDescription()));
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
         this.isRetryable = false;
@@ -79,7 +89,7 @@ public class GlobalRuntimeException extends RuntimeException {
      * @param cause   the underlying cause
      */
     public GlobalRuntimeException(String message, Throwable cause) {
-        super(defaultIfNull(message, BaseErrorCode.SYSTEM_ERROR.getDescription()), cause);
+        super(defaultIfBlank(message, BaseErrorCode.SYSTEM_ERROR.getDescription()), cause);
         this.errorSource = "unknown";
         this.errorCode = BaseErrorCode.SYSTEM_ERROR;
         this.isRetryable = false;
@@ -116,7 +126,7 @@ public class GlobalRuntimeException extends RuntimeException {
      * @param errorCode the error code
      */
     public GlobalRuntimeException(String message, ErrorCode errorCode) {
-        super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)));
+        super(defaultIfBlank(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)));
         this.errorSource = "unknown";
         this.errorCode = errorCode;
         this.isRetryable = false;
@@ -130,7 +140,7 @@ public class GlobalRuntimeException extends RuntimeException {
      * @param errorCode the error code
      */
     public GlobalRuntimeException(String message, Throwable cause, ErrorCode errorCode) {
-        super(defaultIfNull(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)), cause);
+        super(defaultIfBlank(message, Optional.ofNullable(errorCode).map(ErrorCode::getDescription).orElse(null)), cause);
         this.errorSource = "unknown";
         this.errorCode = errorCode;
         this.isRetryable = false;
@@ -156,7 +166,7 @@ public class GlobalRuntimeException extends RuntimeException {
      * @param code    the error code value
      */
     public GlobalRuntimeException(String message, String code) {
-        super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()));
+        super(defaultIfBlank(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()));
         this.errorSource = "unknown";
         this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
         this.isRetryable = false;
@@ -170,7 +180,7 @@ public class GlobalRuntimeException extends RuntimeException {
      * @param code    the error code value
      */
     public GlobalRuntimeException(String message, Throwable cause, String code) {
-        super(defaultIfNull(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()), cause);
+        super(defaultIfBlank(message, ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR).getDescription()), cause);
         this.errorSource = "unknown";
         this.errorCode = ErrorCodeRegistry.getInstance().get(code, BaseErrorCode.SYSTEM_ERROR);
         this.isRetryable = false;

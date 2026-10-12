@@ -27,34 +27,62 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StringUtilsTest {
 
     @Test
-    void defaultIfNull_ShouldReturnValue_WhenNotNull() {
-        String result = StringUtils.defaultIfNull("actual", "default");
+    void defaultIfBlank_ShouldReturnValue_WhenNotBlank() {
+        String result = StringUtils.defaultIfBlank("actual", "default");
 
         assertEquals("actual", result);
     }
 
     @Test
-    void defaultIfNull_ShouldReturnDefault_WhenValueIsNull() {
-        String result = StringUtils.defaultIfNull(null, "default");
+    void defaultIfBlank_ShouldReturnDefault_WhenValueIsNull() {
+        String result = StringUtils.defaultIfBlank(null, "default");
 
         assertEquals("default", result);
     }
 
     @Test
-    void defaultIfNull_ShouldReturnNullDefault_WhenValueIsNull() {
-        String result = StringUtils.defaultIfNull(null, null);
+    void defaultIfBlank_ShouldReturnDefault_WhenValueIsEmpty() {
+        String result = StringUtils.defaultIfBlank("", "default");
+
+        assertEquals("default", result);
+    }
+
+    @Test
+    void defaultIfBlank_ShouldReturnDefault_WhenValueIsWhitespace() {
+        String result = StringUtils.defaultIfBlank("   ", "default");
+
+        assertEquals("default", result);
+    }
+
+    @Test
+    void defaultIfBlank_ShouldReturnNullDefault_WhenValueIsNull() {
+        String result = StringUtils.defaultIfBlank(null, null);
 
         assertNull(result);
     }
 
     @Test
-    void defaultIfNull_ShouldReturnEmptyString_WhenValueIsEmpty() {
-        String result = StringUtils.defaultIfNull("", "default");
+    void isBlank_ShouldReturnFalse_WhenValueIsNotBlank() {
+        assertTrue(StringUtils.isBlank("hello") == false);
+    }
 
-        assertEquals("", result);
+    @Test
+    void isBlank_ShouldReturnTrue_WhenValueIsNull() {
+        assertTrue(StringUtils.isBlank(null));
+    }
+
+    @Test
+    void isBlank_ShouldReturnTrue_WhenValueIsEmpty() {
+        assertTrue(StringUtils.isBlank(""));
+    }
+
+    @Test
+    void isBlank_ShouldReturnTrue_WhenValueIsWhitespace() {
+        assertTrue(StringUtils.isBlank("   "));
     }
 }

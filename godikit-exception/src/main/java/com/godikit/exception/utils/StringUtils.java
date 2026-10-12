@@ -30,24 +30,38 @@ import lombok.NoArgsConstructor;
  * Utility class for string operations.
  *
  * @deprecated Use org.apache.commons.lang3.StringUtils instead.
+ * @since 1.0.0
  */
 @Deprecated
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
 
     /**
-     * Returns the value if not null, otherwise returns the default.
+     * Returns the value if not blank, otherwise returns the default.
      *
-     * @param value the value to check
-     * @param def   the default value
-     * @return the value or default if value is null
-     * @deprecated Use Optional.ofNullable(value).orElse(def) instead.
+     * <p>A string is considered blank if it is null, empty, or contains only whitespace.</p>
+     *
+     * @param s   the string to check
+     * @param def the default value to return if string is blank
+     * @return the string if not blank, otherwise the default value
+     * @deprecated Use org.apache.commons.lang3.StringUtils.defaultIfBlank() instead.
      */
     @Deprecated
-    public static String defaultIfNull(String value, String def) {
-        if (value != null) {
-            return value;
-        }
-        return def;
+    public static String defaultIfBlank(String s, String def) {
+        return isBlank(s) ? def : s;
+    }
+
+    /**
+     * Checks if a string is blank.
+     *
+     * <p>A string is blank if it is null, empty, or contains only whitespace characters.</p>
+     *
+     * @param s the string to check
+     * @return true if the string is blank, false otherwise
+     * @deprecated Use org.apache.commons.lang3.StringUtils.isBlank() instead.
+     */
+    @Deprecated
+    public static boolean isBlank(String s) {
+        return (s == null) || s.trim().isEmpty();
     }
 }

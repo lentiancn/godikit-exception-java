@@ -32,6 +32,9 @@ import java.io.StringWriter;
 /**
  * Utility class for handling stack traces.
  * Provides methods to convert stack traces to string format.
+ *
+ * @apiNote This class is not intended to be instantiated or extended.
+ * @since 1.0.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StackTraceUtils {
@@ -39,8 +42,12 @@ public class StackTraceUtils {
     /**
      * Converts a Throwable to its full stack trace string representation.
      *
+     * <p>If {@code throwable} is null, returns the string "null".
+     * If printStackTrace fails, falls back to {@code throwable.toString()}.</p>
+     *
      * @param throwable the throwable to convert, may be null
      * @return the full stack trace as a string, or "null" if input is null
+     * @apiNote The output includes the exception class name, message, and full stack trace.
      */
     public static String toString(final Throwable throwable) {
         if (throwable == null) {

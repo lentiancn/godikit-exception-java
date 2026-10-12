@@ -36,18 +36,36 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Registry for managing all error codes.
- * Uses SPI to auto-load error code providers at runtime.
+ * Uses SPI (Service Provider Interface) to auto-load error code providers at runtime.
+ *
+ * <p>This registry follows the singleton pattern and lazily initializes on first access.
+ * Error codes are loaded via {@link ServiceLoader} from all registered {@link ErrorCodeProvider}
+ * implementations found in the classpath.</p>
+ *
+ * <p><b>Usage example:</b></p>
+ * <pre>{@code
+ * ErrorCodeRegistry registry = ErrorCodeRegistry.getInstance();
+ * ErrorCode code = registry.get("000010");
+ * }</pre>
+ *
+ * @apiNote This class is thread-safe. The {@code initialize()} method will only execute once
+ *          even when called concurrently from multiple threads.
+ * @see ErrorCodeProvider
+ * @see ErrorCode
+ * @since 1.0.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorCodeRegistry {
 
     /**
-     * Map storing error codes by their code value.
+     * Map storing error codes indexed by their code value (e.g., "000010").
+     * Uses ConcurrentHashMap for thread-safe access.
      */
     private static final Map<String, ErrorCode> ERROR_CODE_MAP = new ConcurrentHashMap<>();
 
     /**
-     * Map storing error codes by their name (for enum-based codes).
+     * Map storing error codes indexed by their name.
+     * Used for enum-based error codes where lookup by enum constant name is needed.
      */
     private static final Map<String, ErrorCode> NAME_MAP = new ConcurrentHashMap<>();
 
@@ -58,6 +76,7 @@ public class ErrorCodeRegistry {
 
     /**
      * Flag to track if initialization has completed.
+     * Volatile ensures visibility across threads.
      */
     private static volatile boolean initialized = false;
 
