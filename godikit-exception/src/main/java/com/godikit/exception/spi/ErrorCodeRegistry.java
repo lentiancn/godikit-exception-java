@@ -48,8 +48,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * ErrorCode code = registry.get("000010");
  * }</pre>
  *
- * @apiNote This class is thread-safe. The {@code initialize()} method will only execute once
- * even when called concurrently from multiple threads.
  * @see ErrorCodeProvider
  * @see ErrorCode
  * @since 1.0.0

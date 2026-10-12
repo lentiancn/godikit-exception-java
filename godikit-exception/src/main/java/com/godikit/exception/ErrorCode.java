@@ -29,8 +29,6 @@ import java.io.Serializable;
  * Interface for error codes.
  * Defines the contract for error code implementation.
  *
- * @apiNote Implementations should ensure that {@link #getCode()} returns a unique identifier
- * across all registered error codes to avoid collisions in the registry.
  * @since 1.0.0
  */
 public interface ErrorCode extends Serializable {
@@ -39,7 +37,6 @@ public interface ErrorCode extends Serializable {
      * Returns the name of this error code.
      *
      * @return the error code name, typically the enum constant name
-     * @apiNote For enum implementations, this typically returns {@code name()}.
      */
     String getName();
 
@@ -47,7 +44,6 @@ public interface ErrorCode extends Serializable {
      * Returns the unique code identifier.
      *
      * @return the error code value, should be non-null and non-empty
-     * @apiNote Code format should be consistent, e.g., 6-digit numeric codes.
      */
     String getCode();
 
@@ -55,7 +51,6 @@ public interface ErrorCode extends Serializable {
      * Returns the human-readable description of this error.
      *
      * @return the error description, suitable for display to end users
-     * @apiNote Descriptions should be clear and actionable when possible.
      */
     String getDescription();
 }

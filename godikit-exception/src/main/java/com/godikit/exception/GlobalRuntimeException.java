@@ -35,8 +35,6 @@ import static com.godikit.exception.utils.StringUtils.defaultIfBlank;
  * Unchecked runtime exception for Godikit framework.
  * Carries error source information and associated error code.
  *
- * @apiNote This is an unchecked exception suitable for programming errors
- * and unrecoverable failures. For recoverable errors, consider {@link GlobalException}.
  * @see GlobalException
  * @since 1.0.0
  */
@@ -46,8 +44,6 @@ public class GlobalRuntimeException extends RuntimeException {
     /**
      * The source or origin module/class where the error occurred.
      * Defaults to {@code "unknown"} when not explicitly provided.
-     *
-     * @apiNote This field is currently reserved for future use.
      */
     private final String errorSource;
     /**
@@ -57,7 +53,6 @@ public class GlobalRuntimeException extends RuntimeException {
     private final ErrorCode errorCode;
     /**
      * Indicates whether the error is retryable.
-     * Can be modified via {@link #setRetryable(boolean)} after construction.
      */
     private boolean isRetryable;
 

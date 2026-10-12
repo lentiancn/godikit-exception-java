@@ -35,8 +35,6 @@ import static com.godikit.exception.utils.StringUtils.defaultIfBlank;
  * Checked exception for Godikit framework.
  * Carries error source information and associated error code.
  *
- * @apiNote This is a checked exception suitable for recoverable errors.
- * For unrecoverable errors, consider using {@link GlobalRuntimeException}.
  * @see GlobalRuntimeException
  * @since 1.0.0
  */
@@ -46,8 +44,6 @@ public class GlobalException extends Exception {
     /**
      * The source or origin module/class where the error occurred.
      * Defaults to {@code "unknown"} when not explicitly provided.
-     *
-     * @apiNote This field is currently reserved for future use.
      */
     private final String errorSource;
     /**
@@ -57,7 +53,6 @@ public class GlobalException extends Exception {
     private final ErrorCode errorCode;
     /**
      * Indicates whether the error is retryable.
-     * Can be modified via {@link #setRetryable(boolean)} after construction.
      */
     private boolean isRetryable;
 
