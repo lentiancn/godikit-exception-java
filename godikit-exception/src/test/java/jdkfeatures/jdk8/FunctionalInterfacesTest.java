@@ -7,20 +7,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * JDK 8 新特性测试：函数式接口与 java.util.function 包内建接口。
  * 覆盖 Predicate、Function、Consumer、Supplier，以及自定义函数式接口。
  */
 class FunctionalInterfacesTest {
-
-    @FunctionalInterface
-    interface TriFunction<A, B, C, R> {
-        R apply(A a, B b, C c);
-    }
 
     @Test
     void predicateTests() {
@@ -78,5 +71,10 @@ class FunctionalInterfacesTest {
     void customTriFunction() {
         TriFunction<Integer, Integer, Integer, Integer> sum = (a, b, c) -> a + b + c;
         assertEquals(6, sum.apply(1, 2, 3));
+    }
+
+    @FunctionalInterface
+    interface TriFunction<A, B, C, R> {
+        R apply(A a, B b, C c);
     }
 }

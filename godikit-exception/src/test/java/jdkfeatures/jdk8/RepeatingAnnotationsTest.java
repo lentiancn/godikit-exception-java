@@ -2,11 +2,7 @@ package jdkfeatures.jdk8;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Repeatable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,19 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * 验证同一元素上可多次使用同一注解，并通过反射读取所有重复注解。
  */
 class RepeatingAnnotationsTest {
-
-    @Repeatable(Schedules.class)
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    @interface Schedule {
-        String time();
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    @interface Schedules {
-        Schedule[] value();
-    }
 
     @Schedule(time = "08:00")
     @Schedule(time = "12:00")
@@ -51,5 +34,18 @@ class RepeatingAnnotationsTest {
         Method method = RepeatingAnnotationsTest.class.getMethod("task");
         Schedules container = method.getAnnotation(Schedules.class);
         assertEquals(3, container.value().length);
+    }
+
+    @Repeatable(Schedules.class)
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    @interface Schedule {
+        String time();
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    @interface Schedules {
+        Schedule[] value();
     }
 }

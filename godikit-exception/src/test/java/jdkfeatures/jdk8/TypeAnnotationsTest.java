@@ -16,16 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class TypeAnnotationsTest {
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE_USE)
-    @interface NonNull {
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE_USE)
-    @interface Positive {
-    }
-
     private List<@NonNull String> names;
 
     @Test
@@ -54,5 +44,15 @@ class TypeAnnotationsTest {
         Object obj = "hello";
         String str = (@NonNull String) obj;
         assertEquals("hello", str);
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE_USE)
+    @interface NonNull {
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE_USE)
+    @interface Positive {
     }
 }

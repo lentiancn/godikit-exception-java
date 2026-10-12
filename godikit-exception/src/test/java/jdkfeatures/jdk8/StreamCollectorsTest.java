@@ -2,11 +2,7 @@ package jdkfeatures.jdk8;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.IntSummaryStatistics;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,30 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 覆盖 toList/toSet/toMap、joining、groupingBy、partitioningBy、统计汇总。
  */
 class StreamCollectorsTest {
-
-    static class Employee {
-        private final String name;
-        private final String department;
-        private final int salary;
-
-        Employee(String name, String department, int salary) {
-            this.name = name;
-            this.department = department;
-            this.salary = salary;
-        }
-
-        String getName() {
-            return name;
-        }
-
-        String getDepartment() {
-            return department;
-        }
-
-        int getSalary() {
-            return salary;
-        }
-    }
 
     private final List<Employee> employees = Arrays.asList(
             new Employee("Alice", "Engineering", 5000),
@@ -120,5 +92,29 @@ class StreamCollectorsTest {
     void countingAndMaxBy() {
         long count = employees.stream().collect(Collectors.counting());
         assertEquals(4, count);
+    }
+
+    static class Employee {
+        private final String name;
+        private final String department;
+        private final int salary;
+
+        Employee(String name, String department, int salary) {
+            this.name = name;
+            this.department = department;
+            this.salary = salary;
+        }
+
+        String getName() {
+            return name;
+        }
+
+        String getDepartment() {
+            return department;
+        }
+
+        int getSalary() {
+            return salary;
+        }
     }
 }

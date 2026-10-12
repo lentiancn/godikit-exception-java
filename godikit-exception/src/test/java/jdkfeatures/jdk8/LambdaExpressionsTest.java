@@ -14,21 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class LambdaExpressionsTest {
 
-    @FunctionalInterface
-    interface Greeter {
-        String greet(String name);
-    }
-
-    @FunctionalInterface
-    interface Calculator {
-        int calculate(int a, int b);
-    }
-
-    @FunctionalInterface
-    interface Action {
-        void run();
-    }
-
     @Test
     void singleParameterLambda() {
         Greeter greeter = name -> "Hello, " + name;
@@ -82,5 +67,20 @@ class LambdaExpressionsTest {
         increment.run();
         increment.run();
         assertEquals(2, counter.get());
+    }
+
+    @FunctionalInterface
+    interface Greeter {
+        String greet(String name);
+    }
+
+    @FunctionalInterface
+    interface Calculator {
+        int calculate(int a, int b);
+    }
+
+    @FunctionalInterface
+    interface Action {
+        void run();
     }
 }

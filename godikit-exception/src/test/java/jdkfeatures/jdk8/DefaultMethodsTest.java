@@ -10,13 +10,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class DefaultMethodsTest {
 
-    interface Vehicle {
-        default String start() {
-            return "Vehicle starting";
-        }
+    @Test
+    void defaultMethodInherited() {
+        Car car = new Car();
+        assertEquals("Vehicle starting", car.start());
+    }
 
+    @Test
+    void defaultMethodOverridden() {
+        SportsCar car = new SportsCar();
+        assertEquals("SportsCar starting", car.start());
+    }
+
+    @Test
+    void defaultMethodConflictResolution() {
+        AlarmCar car = new AlarmCar();
+        assertEquals("Vehicle starting + Alarm starting", car.start());
+    }
+
+    @Test
+    void staticMethodInInterface() {
+        assertEquals("Godikit Motors", Vehicle.manufacturer());
+    }
+
+    interface Vehicle {
         static String manufacturer() {
             return "Godikit Motors";
+        }
+
+        default String start() {
+            return "Vehicle starting";
         }
     }
 
@@ -41,28 +64,5 @@ class DefaultMethodsTest {
         public String start() {
             return Vehicle.super.start() + " + " + Alarm.super.start();
         }
-    }
-
-    @Test
-    void defaultMethodInherited() {
-        Car car = new Car();
-        assertEquals("Vehicle starting", car.start());
-    }
-
-    @Test
-    void defaultMethodOverridden() {
-        SportsCar car = new SportsCar();
-        assertEquals("SportsCar starting", car.start());
-    }
-
-    @Test
-    void defaultMethodConflictResolution() {
-        AlarmCar car = new AlarmCar();
-        assertEquals("Vehicle starting + Alarm starting", car.start());
-    }
-
-    @Test
-    void staticMethodInInterface() {
-        assertEquals("Godikit Motors", Vehicle.manufacturer());
     }
 }

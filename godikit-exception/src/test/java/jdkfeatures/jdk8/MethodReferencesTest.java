@@ -9,29 +9,12 @@ import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * JDK 8 新特性测试：方法引用。
  * 覆盖四种形式：静态方法、实例方法、特定对象实例方法、构造方法引用。
  */
 class MethodReferencesTest {
-
-    static class Person {
-        private final String name;
-
-        Person(String name) {
-            this.name = name;
-        }
-
-        String getName() {
-            return name;
-        }
-
-        static int compareByName(Person a, Person b) {
-            return a.name.compareTo(b.name);
-        }
-    }
 
     @Test
     void staticMethodReference() {
@@ -84,5 +67,21 @@ class MethodReferencesTest {
         Function<String, String> trimAndUpper = ((Function<String, String>) String::trim)
                 .andThen(String::toUpperCase);
         assertEquals("HELLO", trimAndUpper.apply("  hello  "));
+    }
+
+    static class Person {
+        private final String name;
+
+        Person(String name) {
+            this.name = name;
+        }
+
+        static int compareByName(Person a, Person b) {
+            return a.name.compareTo(b.name);
+        }
+
+        String getName() {
+            return name;
+        }
     }
 }

@@ -23,6 +23,13 @@
         <godikit.java.version>17</godikit.java.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.godikit.exception</groupId>
+            <artifactId>godikit-exception</artifactId>
+        </dependency>
+    </dependencies>
+
     <developers>
         <developer>
             <name>Len (田隆)</name>

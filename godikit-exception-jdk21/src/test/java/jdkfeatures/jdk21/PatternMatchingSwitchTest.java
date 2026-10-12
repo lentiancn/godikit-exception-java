@@ -6,15 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PatternMatchingSwitchTest {
 
-    sealed interface Result permits Success, Failure {
-    }
-
-    record Success(String message) implements Result {
-    }
-
-    record Failure(String error) implements Result {
-    }
-
     @Test
     void switchSupportsTypePatterns() {
         Object value = 100;
@@ -40,9 +31,6 @@ class PatternMatchingSwitchTest {
         assertEquals("ok", message);
     }
 
-    record User(String name, int age) {
-    }
-
     @Test
     void switchCanUseRecordPattern() {
         Object value = new User("Bob", 18);
@@ -53,5 +41,17 @@ class PatternMatchingSwitchTest {
         };
 
         assertEquals("Bob:18", message);
+    }
+
+    sealed interface Result permits Success, Failure {
+    }
+
+    record Success(String message) implements Result {
+    }
+
+    record Failure(String error) implements Result {
+    }
+
+    record User(String name, int age) {
     }
 }
