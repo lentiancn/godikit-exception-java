@@ -21,22 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.godikit.error.code;
+package com.godikit.exception.spi.provider;
 
-import com.godikit.exception.errorcode.ErrorCode;
+import com.godikit.exception.ErrorCode;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * SPI interface for registering error codes.
- * Implementations can register multiple error codes via the register method.
+ * SPI provider for registering base error codes.
+ * Registers all BaseErrorCode enum values.
  */
-public interface ErrorCodeProvider {
+public class BaseErrorCodeProvider implements ErrorCodeProvider {
 
     /**
-     * Registers error codes into the provided list.
+     * Registers all BaseErrorCode enum constants.
      *
      * @param codes the list to register error codes into
      */
-    void register(List<ErrorCode> codes);
+    @Override
+    public void register(List<ErrorCode> codes) {
+        codes.addAll(Arrays.asList(BaseErrorCode.values()));
+    }
 }

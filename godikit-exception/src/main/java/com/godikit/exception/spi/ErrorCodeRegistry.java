@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.godikit.error.code;
+package com.godikit.exception.spi;
 
-import com.godikit.exception.errorcode.ErrorCode;
+import com.godikit.exception.ErrorCode;
+import com.godikit.exception.spi.provider.ErrorCodeProvider;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

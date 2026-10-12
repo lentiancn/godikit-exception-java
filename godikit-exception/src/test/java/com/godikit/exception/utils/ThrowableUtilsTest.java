@@ -31,14 +31,14 @@ class ThrowableUtilsTest {
 
     @Test
     void toString_ExpectNullString_WhenInputIsNull() {
-        String result = ThrowableUtils.toString(null);
+        String result = StackTraceUtils.toString(null);
         assertEquals("null", result);
     }
 
     @Test
     void toString_ExpectStackTrace_WhenNormalException() {
         NullPointerException npe = new NullPointerException("test message");
-        String result = ThrowableUtils.toString(npe);
+        String result = StackTraceUtils.toString(npe);
 
         assertNotNull(result);
         assertTrue(result.contains("java.lang.NullPointerException"));
@@ -49,7 +49,7 @@ class ThrowableUtilsTest {
     void toString_ExpectChainedStackTrace_WhenExceptionWithCause() {
         RuntimeException cause = new IllegalArgumentException("cause message");
         RuntimeException exception = new RuntimeException("wrapper message", cause);
-        String result = ThrowableUtils.toString(exception);
+        String result = StackTraceUtils.toString(exception);
 
         assertNotNull(result);
         assertTrue(result.contains("RuntimeException"));
@@ -61,7 +61,7 @@ class ThrowableUtilsTest {
     @Test
     void toString_ExpectClassNameOnly_WhenExceptionWithEmptyMessage() {
         RuntimeException exception = new RuntimeException();
-        String result = ThrowableUtils.toString(exception);
+        String result = StackTraceUtils.toString(exception);
 
         assertNotNull(result);
         assertTrue(result.contains("RuntimeException"));
@@ -76,7 +76,7 @@ class ThrowableUtilsTest {
             }
         };
 
-        String result = ThrowableUtils.toString(exception);
+        String result = StackTraceUtils.toString(exception);
 
         assertNotNull(result);
         assertEquals(exception.toString(), result);

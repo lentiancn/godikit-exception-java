@@ -21,27 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.godikit.error.code;
+package com.godikit.exception.spi.provider;
 
-import com.godikit.exception.errorcode.BaseErrorCode;
-import com.godikit.exception.errorcode.ErrorCode;
-
-import java.util.Arrays;
-import java.util.List;
+import com.godikit.exception.ErrorCode;
+import lombok.Getter;
 
 /**
- * SPI provider for registering base error codes.
- * Registers all BaseErrorCode enum values.
+ * Base error codes for the Godikit framework.
+ * Provides common system-level and parameter error codes.
  */
-public class BaseErrorCodeProvider implements ErrorCodeProvider {
+@Getter
+public enum BaseErrorCode implements ErrorCode {
 
     /**
-     * Registers all BaseErrorCode enum constants.
-     *
-     * @param codes the list to register error codes into
+     * No error, operation completed successfully.
      */
-    @Override
-    public void register(List<ErrorCode> codes) {
-        codes.addAll(Arrays.asList(BaseErrorCode.values()));
+    NO_ERROR("000000", "No Error"),
+
+    /**
+     * System-level internal error.
+     */
+    SYSTEM_ERROR("000010", "System Error"),
+
+    /**
+     * Unknown error that cannot be classified.
+     */
+    UNKNOWN_ERROR("000011", "Unknown Error"),
+
+    /**
+     * General parameter validation error.
+     */
+    PARAM_ERROR("000020", "Parameter Error"),
+
+    /**
+     * Required parameter is missing.
+     */
+    PARAM_MISSING_ERROR("000021", "Parameter Missing Error"),
+
+    /**
+     * Parameter value is invalid.
+     */
+    PARAM_INVALID_ERROR("000022", "Parameter Invalid Error");
+
+    private final String name;
+    private final String code;
+    private final String description;
+
+    BaseErrorCode(String code, String description) {
+        this.name = name();
+        this.code = code;
+        this.description = description;
     }
 }

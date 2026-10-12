@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.godikit.error.code;
+package com.godikit.exception.spi;
 
-import com.godikit.exception.errorcode.BaseErrorCode;
-import com.godikit.exception.errorcode.ErrorCode;
+import com.godikit.exception.ErrorCode;
+import com.godikit.exception.spi.provider.BaseErrorCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

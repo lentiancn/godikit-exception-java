@@ -23,9 +23,8 @@
  */
 package com.godikit.exception;
 
-import com.godikit.exception.errorcode.BaseErrorCode;
-import com.godikit.error.code.ErrorCodeRegistry;
-import com.godikit.exception.errorcode.ErrorCode;
+import com.godikit.exception.spi.ErrorCodeRegistry;
+import com.godikit.exception.spi.provider.BaseErrorCode;
 import lombok.Getter;
 
 import java.util.Optional;
