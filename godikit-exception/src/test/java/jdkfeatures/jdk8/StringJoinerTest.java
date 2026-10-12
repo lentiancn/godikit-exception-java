@@ -28,8 +28,9 @@ class StringJoinerTest {
 
     @Test
     void emptyJoinerWithPrefixSuffix() {
+        // StringJoiner(delimiter, prefix, suffix) 的 emptyValue 默认为 prefix + suffix
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        assertEquals("", joiner.toString());
+        assertEquals("[]", joiner.toString());
     }
 
     @Test

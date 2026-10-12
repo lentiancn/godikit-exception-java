@@ -72,8 +72,10 @@ class DateTimeApiTest {
         LocalTime start = LocalTime.of(10, 0);
         LocalTime end = LocalTime.of(12, 30);
         Duration duration = Duration.between(start, end);
-        assertEquals(150, duration.toMinutes());
-        assertEquals(2.5, duration.toHours(), 0.001);
+        assertEquals(150L, duration.toMinutes());
+        // toHours() 返回 long，舍弃不足一小时的部分
+        assertEquals(2L, duration.toHours());
+        assertEquals(2.5, duration.toMinutes() / 60.0, 0.001);
     }
 
     @Test

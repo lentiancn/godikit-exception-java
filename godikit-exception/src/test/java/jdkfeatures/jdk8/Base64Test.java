@@ -7,6 +7,7 @@ import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * JDK 8 新特性测试：Base64 编解码（java.util.Base64）。
@@ -29,14 +30,19 @@ class Base64Test {
 
     @Test
     void urlSafeEncodeDecode() {
-        byte[] data = new byte[]{(byte) 0xFB, (byte) 0xEF, (byte) 0xBE};
-        String urlEncoded = Base64.getUrlEncoder().encodeToString(data);
-        // URL 安全变体使用 - 和 _ 替代 + 和 /
-        String trimmed = urlEncoded.replaceFirst("=+$", "");
-        assertEquals("-+-", trimmed);
+        // {0xFB, 0xEF, 0xBE} 的四个 6 位组均为 62
+        // 标准 Base64 中 62 = '+'，URL-safe 中 62 = '-'
+        byte[] plusData = new byte[]{(byte) 0xFB, (byte) 0xEF, (byte) 0xBE};
+        String plusEncoded = Base64.getUrlEncoder().encodeToString(plusData);
+        assertEquals("----", plusEncoded);
+        assertArrayEquals(plusData, Base64.getUrlDecoder().decode(plusEncoded));
 
-        byte[] decoded = Base64.getUrlDecoder().decode(urlEncoded);
-        assertArrayEquals(data, decoded);
+        // {0x3F, 0x3F, 0x3F} 的最后一个 6 位组为 63
+        // 标准 Base64 中 63 = '/'，URL-safe 中 63 = '_'
+        byte[] slashData = new byte[]{(byte) 0x3F, (byte) 0x3F, (byte) 0x3F};
+        String slashEncoded = Base64.getUrlEncoder().encodeToString(slashData);
+        assertEquals("Pz8_", slashEncoded);
+        assertArrayEquals(slashData, Base64.getUrlDecoder().decode(slashEncoded));
     }
 
     @Test
@@ -49,7 +55,7 @@ class Base64Test {
 
         String mimeEncoded = Base64.getMimeEncoder().encodeToString(data);
         // MIME 编码器会插入换行符
-        assertEquals(true, mimeEncoded.contains("\r\n") || mimeEncoded.contains("\n"));
+        assertTrue(mimeEncoded.contains("\r\n") || mimeEncoded.contains("\n"));
 
         byte[] decoded = Base64.getMimeDecoder().decode(mimeEncoded);
         assertArrayEquals(data, decoded);

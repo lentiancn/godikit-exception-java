@@ -67,7 +67,7 @@ class CompletableFutureTest {
 
     @Test
     void exceptionHandling() throws Exception {
-        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<String> future = CompletableFuture.<String>supplyAsync(() -> {
             throw new RuntimeException("Boom");
         }).exceptionally(ex -> "recovered");
 
@@ -76,7 +76,7 @@ class CompletableFutureTest {
 
     @Test
     void handleException() throws Exception {
-        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<String> future = CompletableFuture.<String>supplyAsync(() -> {
             throw new RuntimeException("error");
         }).handle((result, ex) -> ex != null ? "handled" : result);
 

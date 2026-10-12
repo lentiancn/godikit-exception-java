@@ -32,7 +32,9 @@ class FunctionalInterfacesTest {
         Predicate<Integer> isPositive = n -> n > 0;
         assertTrue(isEven.and(isPositive).test(4));
         assertFalse(isEven.and(isPositive).test(-2));
-        assertTrue(isEven.or(isPositive).test(-3));
+        assertFalse(isEven.or(isPositive).test(-3));
+        assertTrue(isEven.or(isPositive).test(-2));
+        assertTrue(isEven.or(isPositive).test(3));
         assertTrue(isEven.negate().test(3));
     }
 
@@ -43,10 +45,10 @@ class FunctionalInterfacesTest {
 
         Function<Integer, Integer> doubleIt = x -> x * 2;
         Function<Integer, Integer> addOne = x -> x + 1;
-        // andThen: 先执行当前函数，再执行参数函数
-        assertEquals(6, doubleIt.andThen(addOne).apply(2));
-        // compose: 先执行参数函数，再执行当前函数
-        assertEquals(5, doubleIt.compose(addOne).apply(2));
+        // andThen: 先乘 2，再加 1，即 2 * 2 + 1 = 5
+        assertEquals(5, doubleIt.andThen(addOne).apply(2));
+        // compose: 先加 1，再乘 2，即 (2 + 1) * 2 = 6
+        assertEquals(6, doubleIt.compose(addOne).apply(2));
     }
 
     @Test
