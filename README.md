@@ -10,15 +10,16 @@ English
 
 - **Plugin-based Error Codes**: Use Java SPI to register error codes dynamically
 - **Two Exception Types**: `GlobalException` (checked) and `GlobalRuntimeException` (unchecked)
-- **Error Source Tracking**: Track where errors originate (server, client, mobile, etc.)
+- **Built-in Error Codes**: Common error codes included (`SYSTEM_ERROR`, `PARAM_ERROR`, etc.)
 - **Unified Error Format**: Consistent error message format across applications
-- **Throwable Utilities**: Convert stack traces to strings easily
+- **Stack Trace Utilities**: Convert stack traces to strings easily
+- **Retryable Support**: Flag exceptions as retryable for fault-tolerant systems
 
 ## Modules
 
-| Module              | Purpose                                               |
-|---------------------|-------------------------------------------------------|
-| `godikit-exception` | Core API (ErrorCode, GlobalException, ThrowableUtils) |
+| Module              | Purpose                                                                        |
+|---------------------|--------------------------------------------------------------------------------|
+| `godikit-exception` | Core API (ErrorCode, GlobalException, GlobalRuntimeException, StackTraceUtils) |
 
 ## Quick Start
 
@@ -102,15 +103,40 @@ GlobalRuntimeException runtimeEx = GlobalException.toGlobalRuntimeException(ex);
 ### Error Message Format
 
 ```
-[server-a] [10001 User Not Found] java.lang.RuntimeException: User id: 123
+[unknown] [10001 User Not Found] java.lang.RuntimeException: User id: 123
 ```
 
-### Throwable Utils
+> **Note**: The error source defaults to "unknown". The format is: `[errorSource] [code description] message`
+
+### StackTrace Utils
 
 ```java
 // Convert exception to stack trace string
-String stackTrace = ThrowableUtils.toString(exception);
+String stackTrace = StackTraceUtils.toString(exception);
 ```
+
+### Retryable Exceptions
+
+```java
+// Mark an exception as retryable
+throw new GlobalRuntimeException(MyErrorCode.NETWORK_ERROR)
+    .
+
+setRetryable(true);
+```
+
+## Built-in Error Codes
+
+The library includes common error codes in `BaseErrorCode`:
+
+| Code   | Name                | Description            |
+|--------|---------------------|------------------------|
+| 000000 | NO_ERROR            | No error               |
+| 000010 | SYSTEM_ERROR        | System-level error     |
+| 000011 | UNKNOWN_ERROR       | Unknown error          |
+| 000020 | PARAM_ERROR         | Parameter error        |
+| 000021 | PARAM_MISSING_ERROR | Required param missing |
+| 000022 | PARAM_INVALID_ERROR | Invalid param value    |
 
 ## Requirements
 
