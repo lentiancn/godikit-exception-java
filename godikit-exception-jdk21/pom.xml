@@ -11,9 +11,9 @@
 
     <artifactId>godikit-exception-jdk21</artifactId>
     <version>${revision}</version>
-    <name>GodiKit Exception</name>
+    <name>GodiKit Exception (JDK21)</name>
     <description>
-        An exception utility package for JDK 8+, designed to unify the management of exception components in Java
+        An exception utility package for JDK 21+, designed to unify the management of exception components in Java
         projects
         and establish a consistent standard.
     </description>
