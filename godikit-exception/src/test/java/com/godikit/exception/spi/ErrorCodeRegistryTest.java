@@ -55,7 +55,7 @@ class ErrorCodeRegistryTest {
         initializedField.setAccessible(true);
         initializedField.setBoolean(registry, false);
 
-        Field codeMapField = ErrorCodeRegistry.class.getDeclaredField("CODE_MAP");
+        Field codeMapField = ErrorCodeRegistry.class.getDeclaredField("ERROR_CODE_MAP");
         codeMapField.setAccessible(true);
         ((Map<?, ?>) codeMapField.get(registry)).clear();
 
