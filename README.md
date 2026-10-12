@@ -1,6 +1,6 @@
 # godikit-exception
 
-[![License](https://img.shields.io/github/license/lentiancn/godikit-exception-java.svg)](https://github.com/lentiancn/godikit-exception-java/LICENSE)
+[![License](https://img.shields.io/github/license/lentiancn/godikit-exception-java.svg)](https://github.com/lentiancn/godikit-exception-java/blob/main/LICENSE)
 [![Codecov](https://img.shields.io/codecov/c/github/lentiancn/godikit-exception-java.svg)](https://codecov.io/gh/lentiancn/godikit-exception-java)
 [![GitHub Release](https://img.shields.io/github/tag/lentiancn/godikit-exception-java.svg?label=release)](https://github.com/lentiancn/godikit-exception-java/releases)
 
