@@ -26,7 +26,7 @@ English
 
 ```xml
 <dependency>
-    <groupId>com.godikit.error</groupId>
+    <groupId>com.godikit.exception</groupId>
     <artifactId>godikit-error</artifactId>
     <version>1.0.2</version>
 </dependency>
@@ -72,7 +72,7 @@ public enum MyErrorCode implements ErrorCode {
 Create SPI configuration file:
 
 ```
-# src/main/resources/META-INF/services/com.godikit.error.code.ErrorCodeProvider
+# src/main/resources/META-INF/services/com.godikit.exception.code.ErrorCodeProvider
 com.example.myapp.MyErrorCodeProvider
 ```
 

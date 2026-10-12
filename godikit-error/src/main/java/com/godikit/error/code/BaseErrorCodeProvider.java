@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.godikit.error.code;
+package com.godikit.exception.code;
 
 import java.util.Arrays;
 import java.util.List;

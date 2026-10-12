@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.godikit.error</groupId>
+        <groupId>com.godikit.exception</groupId>
         <artifactId>godikit-error-parent</artifactId>
         <version>${revision}</version>
     </parent>

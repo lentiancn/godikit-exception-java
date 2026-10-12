@@ -23,14 +23,14 @@
  */
 package com.godikit.exception;
 
-import com.godikit.error.code.BaseErrorCode;
-import com.godikit.error.code.ErrorCode;
-import com.godikit.error.code.ErrorCodeRegistry;
+import com.godikit.exception.code.BaseErrorCode;
+import com.godikit.exception.code.ErrorCode;
+import com.godikit.exception.code.ErrorCodeRegistry;
 import lombok.Getter;
 
 import java.util.Optional;
 
-import static com.godikit.error.utils.StringUtils.defaultIfNull;
+import static com.godikit.exception.utils.StringUtils.defaultIfNull;
 
 /**
  * Unchecked runtime exception for Godikit framework.
