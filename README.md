@@ -28,7 +28,7 @@ English
 <dependency>
     <groupId>com.godikit.exception</groupId>
     <artifactId>godikit-exception</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
