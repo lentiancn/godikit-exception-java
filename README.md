@@ -72,7 +72,7 @@ public enum MyErrorCode implements ErrorCode {
 Create SPI configuration file:
 
 ```
-# src/main/resources/META-INF/services/com.godikit.exception.code.ErrorCodeProvider
+# src/main/resources/META-INF/services/com.godikit.error.code.ErrorCodeProvider
 com.example.myapp.MyErrorCodeProvider
 ```
 
