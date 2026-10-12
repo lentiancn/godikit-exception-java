@@ -4,15 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.godikit.exception</groupId>
-    <artifactId>godikit-error-parent</artifactId>
+    <artifactId>godikit-exception-parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>GodiKit Error Parent</name>
+    <name>GodiKit Exception Parent</name>
     <description>
-        An error utility package for JDK 8+, designed to unify the management of error components in Java projects
+        An exception utility package for JDK 8+, designed to unify the management of exception components in Java projects
         and establish a consistent standard.
     </description>
-    <url>https://www.godikit.com/error</url>
+    <url>https://www.godikit.com/exception</url>
 
     <properties>
         <revision>1.0.2</revision>
@@ -54,14 +54,14 @@
     </properties>
 
     <modules>
-        <module>godikit-error</module>
+        <module>godikit-exception</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.godikit.exception</groupId>
-                <artifactId>godikit-error</artifactId>
+                <artifactId>godikit-exception</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -333,13 +333,13 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://raw.githubusercontent.com/lentiancn/godikit-error-java/refs/heads/main/LICENSE</url>
+            <url>https://raw.githubusercontent.com/lentiancn/godikit-exception-java/refs/heads/main/LICENSE</url>
         </license>
     </licenses>
 
     <scm>
-        <url>https://github.com/lentiancn/godikit-error-java</url>
-        <connection>scm:git:https://github.com/lentiancn/godikit-error-java.git</connection>
-        <developerConnection>scm:git:git@github.com:lentiancn/godikit-error-java.git</developerConnection>
+        <url>https://github.com/lentiancn/godikit-exception-java</url>
+        <connection>scm:git:https://github.com/lentiancn/godikit-exception-java.git</connection>
+        <developerConnection>scm:git:git@github.com:lentiancn/godikit-exception-java.git</developerConnection>
     </scm>
 </project>

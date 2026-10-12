@@ -1,8 +1,8 @@
-# godikit-error
+# godikit-exception
 
-[![License](https://img.shields.io/github/license/lentiancn/godikit-error-java.svg)](https://github.com/lentiancn/godikit-error-java/LICENSE)
-[![Codecov](https://img.shields.io/codecov/c/github/lentiancn/godikit-error-java.svg)](https://codecov.io/gh/lentiancn/godikit-error-java)
-[![GitHub Release](https://img.shields.io/github/tag/lentiancn/godikit-error-java.svg?label=release)](https://github.com/lentiancn/godikit-error-java/releases)
+[![License](https://img.shields.io/github/license/lentiancn/godikit-exception-java.svg)](https://github.com/lentiancn/godikit-exception-java/LICENSE)
+[![Codecov](https://img.shields.io/codecov/c/github/lentiancn/godikit-exception-java.svg)](https://codecov.io/gh/lentiancn/godikit-exception-java)
+[![GitHub Release](https://img.shields.io/github/tag/lentiancn/godikit-exception-java.svg?label=release)](https://github.com/lentiancn/godikit-exception-java/releases)
 
 English
 
@@ -18,7 +18,7 @@ English
 
 | Module          | Purpose                                               |
 |-----------------|-------------------------------------------------------|
-| `godikit-error` | Core API (ErrorCode, GlobalException, ThrowableUtils) |
+| `godikit-exception` | Core API (ErrorCode, GlobalException, ThrowableUtils) |
 
 ## Quick Start
 
@@ -27,7 +27,7 @@ English
 ```xml
 <dependency>
     <groupId>com.godikit.exception</groupId>
-    <artifactId>godikit-error</artifactId>
+    <artifactId>godikit-exception</artifactId>
     <version>1.0.2</version>
 </dependency>
 ```
@@ -119,9 +119,9 @@ String stackTrace = ThrowableUtils.toString(exception);
 
 ## License
 
-`godikit-error` is licensed under the [MIT License](LICENSE).
+`godikit-exception` is licensed under the [MIT License](LICENSE).
 
 ## Links
 
-- Docs: https://www.godikit.com/error
-- Issues: https://github.com/lentiancn/godikit-error-java/issues
+- Docs: https://www.godikit.com/exception
+- Issues: https://github.com/lentiancn/godikit-exception-java/issues
