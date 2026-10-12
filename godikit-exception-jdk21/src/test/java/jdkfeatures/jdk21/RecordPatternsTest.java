@@ -6,9 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RecordPatternsTest {
 
+    record User(String name, int age) {
+    }
+
+    record Account(User user) {
+    }
+
     @Test
     void recordPatternCanDeconstructRecord() {
-
         Object value = new User("Tom", 20);
 
         String result = "";
@@ -22,9 +27,7 @@ class RecordPatternsTest {
 
     @Test
     void nestedRecordPatternWorks() {
-
-        Thread account =
-                new Account(new User("Alice", 30));
+        Account account = new Account(new User("Alice", 30));
 
         String result = "";
 
@@ -33,11 +36,5 @@ class RecordPatternsTest {
         }
 
         assertEquals("Alice-30", result);
-    }
-
-    record User(String name, int age) {
-    }
-
-    record Account(User user) {
     }
 }

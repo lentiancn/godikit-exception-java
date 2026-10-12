@@ -20,8 +20,7 @@ class SealedClassesTest {
     void sealedClassRestrictsItsDirectSubclasses() {
         assertTrue(Shape.class.isSealed());
 
-        Set<Class<?>> permitted = Arrays.stream(Shape.class.getPermittedSubclasses())
-                .collect(Collectors.toSet());
+        Set<Class<?>> permitted = Arrays.stream(Shape.class.getPermittedSubclasses()).collect(Collectors.toSet());
 
         assertEquals(Set.of(Circle.class, Rectangle.class, ExtendableShape.class), permitted);
     }
@@ -38,8 +37,7 @@ class SealedClassesTest {
     void sealedPermittedSubclassCanRestrictItsOwnChildren() {
         assertTrue(ExtendableShape.class.isSealed());
 
-        Set<Class<?>> permitted = Arrays.stream(ExtendableShape.class.getPermittedSubclasses())
-                .collect(Collectors.toSet());
+        Set<Class<?>> permitted = Arrays.stream(ExtendableShape.class.getPermittedSubclasses()).collect(Collectors.toSet());
 
         assertEquals(Set.of(RoundedShape.class), permitted);
     }
@@ -48,13 +46,9 @@ class SealedClassesTest {
     void sealedInterfaceRestrictsItsDirectImplementations() {
         assertTrue(Payment.class.isSealed());
 
-        Set<Class<?>> permitted = Arrays.stream(Payment.class.getPermittedSubclasses())
-                .collect(Collectors.toSet());
+        Set<Class<?>> permitted = Arrays.stream(Payment.class.getPermittedSubclasses()).collect(Collectors.toSet());
 
-        assertEquals(
-                Set.of(CardPayment.class, PayPalPayment.class, ExtensiblePayment.class),
-                permitted
-        );
+        assertEquals(Set.of(CardPayment.class, PayPalPayment.class, ExtensiblePayment.class), permitted);
     }
 
     @Test
@@ -71,21 +65,18 @@ class SealedClassesTest {
         assertTrue(Shape.class.isAssignableFrom(RoundedShape.class));
 
         // RoundedShape is an indirect subtype of Shape, not a direct permitted subtype.
-        Set<Class<?>> directPermitted = Arrays.stream(Shape.class.getPermittedSubclasses())
-                .collect(Collectors.toSet());
+        Set<Class<?>> directPermitted = Arrays.stream(Shape.class.getPermittedSubclasses()).collect(Collectors.toSet());
 
         assertFalse(directPermitted.contains(RoundedShape.class));
         assertTrue(directPermitted.contains(ExtendableShape.class));
     }
 
     // 3. sealed interface + permits
-    sealed interface Payment
-            permits CardPayment, PayPalPayment, ExtensiblePayment {
+    sealed interface Payment permits CardPayment, PayPalPayment, ExtensiblePayment {
     }
 
     // 1. sealed class + permits + final direct subclass
-    sealed abstract static class Shape
-            permits Circle, Rectangle, ExtendableShape {
+    sealed abstract static class Shape permits Circle, Rectangle, ExtendableShape {
     }
 
     static final class Circle extends Shape {
@@ -95,8 +86,7 @@ class SealedClassesTest {
     }
 
     // 2. A permitted subclass may itself be sealed.
-    sealed static class ExtendableShape extends Shape
-            permits RoundedShape {
+    sealed static class ExtendableShape extends Shape permits RoundedShape {
     }
 
     static final class RoundedShape extends ExtendableShape {
