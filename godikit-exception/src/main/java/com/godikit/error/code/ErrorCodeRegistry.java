@@ -23,6 +23,7 @@
  */
 package com.godikit.error.code;
 
+import com.godikit.exception.errorcode.ErrorCode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -42,7 +43,7 @@ public class ErrorCodeRegistry {
     /**
      * Map storing error codes by their code value.
      */
-    private static final Map<String, ErrorCode> CODE_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, ErrorCode> ERROR_CODE_MAP = new ConcurrentHashMap<>();
 
     /**
      * Map storing error codes by their name (for enum-based codes).
@@ -98,7 +99,7 @@ public class ErrorCodeRegistry {
         if (code == null) {
             return;
         }
-        CODE_MAP.put(code.getCode(), code);
+        ERROR_CODE_MAP.put(code.getCode(), code);
         if (code instanceof Enum) {
             NAME_MAP.put(((Enum<?>) code).name(), code);
         }
@@ -114,7 +115,7 @@ public class ErrorCodeRegistry {
         if (!initialized) {
             initialize();
         }
-        ErrorCode errorCode = CODE_MAP.get(codeOrName);
+        ErrorCode errorCode = ERROR_CODE_MAP.get(codeOrName);
 
         return errorCode != null ? errorCode : NAME_MAP.get(codeOrName);
     }
@@ -143,7 +144,7 @@ public class ErrorCodeRegistry {
         if (!initialized) {
             initialize();
         }
-        return new ArrayList<>(CODE_MAP.values());
+        return new ArrayList<>(ERROR_CODE_MAP.values());
     }
 
     /**
@@ -156,6 +157,6 @@ public class ErrorCodeRegistry {
         if (!initialized) {
             initialize();
         }
-        return CODE_MAP.containsKey(code);
+        return ERROR_CODE_MAP.containsKey(code);
     }
 }

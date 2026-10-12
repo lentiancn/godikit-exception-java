@@ -23,7 +23,7 @@
  */
 package com.godikit.exception;
 
-import com.godikit.error.code.BaseErrorCode;
+import com.godikit.exception.errorcode.BaseErrorCode;
 import com.godikit.error.code.ErrorCode;
 import org.junit.jupiter.api.Test;
 

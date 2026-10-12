@@ -23,6 +23,8 @@
  */
 package com.godikit.error.code;
 
+import com.godikit.exception.errorcode.ErrorCode;
+
 import java.util.List;
 
 /**

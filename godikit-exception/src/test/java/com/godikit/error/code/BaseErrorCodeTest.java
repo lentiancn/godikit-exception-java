@@ -23,6 +23,7 @@
  */
 package com.godikit.error.code;
 
+import com.godikit.exception.errorcode.BaseErrorCode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

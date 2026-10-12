@@ -30,11 +30,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * Utility class for handling Throwable objects.
- * Provides methods to convert throwable stack traces to string format.
+ * Utility class for handling stack traces.
+ * Provides methods to convert stack traces to string format.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ThrowableUtils {
+public class StackTraceUtils {
 
     /**
      * Converts a Throwable to its full stack trace string representation.

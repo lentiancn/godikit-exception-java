@@ -21,34 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.godikit.error.code;
+package com.godikit.exception.errorcode;
 
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
- * Interface for error codes.
- * Defines the contract for error code implementation.
+ * Base error codes for the Godikit framework.
+ * Provides common system-level and parameter error codes.
  */
-public interface ErrorCode extends Serializable {
+@Getter
+public enum BaseErrorCode implements ErrorCode {
 
     /**
-     * Returns the name of the error code.
-     *
-     * @return the error code name
+     * No error, operation completed successfully.
      */
-    String getName();
+    NO_ERROR("000000", "No Error"),
 
     /**
-     * Returns the unique code identifier.
-     *
-     * @return the error code value
+     * System-level internal error.
      */
-    String getCode();
+    SYSTEM_ERROR("000010", "System Error"),
 
     /**
-     * Returns the human-readable description of the error.
-     *
-     * @return the error description
+     * Unknown error that cannot be classified.
      */
-    String getDescription();
+    UNKNOWN_ERROR("000011", "Unknown Error"),
+
+    /**
+     * General parameter validation error.
+     */
+    PARAM_ERROR("000020", "Parameter Error"),
+
+    /**
+     * Required parameter is missing.
+     */
+    PARAM_MISSING_ERROR("000021", "Parameter Missing Error"),
+
+    /**
+     * Parameter value is invalid.
+     */
+    PARAM_INVALID_ERROR("000022", "Parameter Invalid Error");
+
+    private final String name;
+    private final String code;
+    private final String description;
+
+    BaseErrorCode(String code, String description) {
+        this.name = name();
+        this.code = code;
+        this.description = description;
+    }
 }
