@@ -13,7 +13,8 @@
     <version>${revision}</version>
     <name>GodiKit Exception</name>
     <description>
-        An exception utility package for JDK 8+, designed to unify the management of exception components in Java projects
+        An exception utility package for JDK 8+, designed to unify the management of exception components in Java
+        projects
         and establish a consistent standard.
     </description>
     <url>https://www.godikit.com/exception</url>

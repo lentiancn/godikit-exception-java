@@ -16,8 +16,8 @@ English
 
 ## Modules
 
-| Module          | Purpose                                               |
-|-----------------|-------------------------------------------------------|
+| Module              | Purpose                                               |
+|---------------------|-------------------------------------------------------|
 | `godikit-exception` | Core API (ErrorCode, GlobalException, ThrowableUtils) |
 
 ## Quick Start
