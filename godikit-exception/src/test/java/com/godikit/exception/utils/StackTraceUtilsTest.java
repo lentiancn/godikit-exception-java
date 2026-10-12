@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ThrowableUtilsTest {
+class StackTraceUtilsTest {
 
     @Test
     void toString_ExpectNullString_WhenInputIsNull() {
