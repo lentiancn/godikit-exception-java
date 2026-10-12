@@ -29,8 +29,8 @@ import lombok.NoArgsConstructor;
 /**
  * Utility class for string operations.
  *
- * @deprecated Use org.apache.commons.lang3.StringUtils instead.
  * @since 1.0.0
+ * @deprecated Use org.apache.commons.lang3.StringUtils instead.
  */
 @Deprecated
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

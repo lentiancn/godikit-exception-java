@@ -36,7 +36,7 @@ import static com.godikit.exception.utils.StringUtils.defaultIfBlank;
  * Carries error source information and associated error code.
  *
  * @apiNote This is a checked exception suitable for recoverable errors.
- *          For unrecoverable errors, consider using {@link GlobalRuntimeException}.
+ * For unrecoverable errors, consider using {@link GlobalRuntimeException}.
  * @see GlobalRuntimeException
  * @since 1.0.0
  */

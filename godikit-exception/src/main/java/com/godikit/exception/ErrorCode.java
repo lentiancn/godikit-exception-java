@@ -30,7 +30,7 @@ import java.io.Serializable;
  * Defines the contract for error code implementation.
  *
  * @apiNote Implementations should ensure that {@link #getCode()} returns a unique identifier
- *          across all registered error codes to avoid collisions in the registry.
+ * across all registered error codes to avoid collisions in the registry.
  * @since 1.0.0
  */
 public interface ErrorCode extends Serializable {
