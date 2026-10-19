@@ -8,13 +8,13 @@ English
 
 ## Why godikit-exception?
 
-| Scenario                            | Without godikit-exception             | With godikit-exception             |
-|-------------------------------------|---------------------------------------|------------------------------------|
-| Error code management               | Hardcoded constants scattered across classes | SPI-registered enum-based codes    |
-| Error code lookup                   | String matching or enum switch blocks | Direct enum access with rich metadata |
-| Exception type consistency          | Mixed checked/unchecked without rules | GlobalException + GlobalRuntimeException  |
-| Error message format                | Inconsistent across modules           | Unified `[source] [code description] message` |
-| Business error categorization       | Generic RuntimeException everywhere   | Retryable flag for fault-tolerant systems |
+| Scenario                      | Without godikit-exception                    | With godikit-exception                        |
+|-------------------------------|----------------------------------------------|-----------------------------------------------|
+| Error code management         | Hardcoded constants scattered across classes | SPI-registered enum-based codes               |
+| Error code lookup             | String matching or enum switch blocks        | Direct enum access with rich metadata         |
+| Exception type consistency    | Mixed checked/unchecked without rules        | GlobalException + GlobalRuntimeException      |
+| Error message format          | Inconsistent across modules                  | Unified `[source] [code description] message` |
+| Business error categorization | Generic RuntimeException everywhere          | Retryable flag for fault-tolerant systems     |
 
 ## Features
 
@@ -54,9 +54,9 @@ English
 
 ```xml
 <dependency>
-    <groupId>com.godikit.exception</groupId>
-    <artifactId>godikit-exception</artifactId>
-    <version>1.0.0</version>
+  <groupId>com.godikit.exception</groupId>
+  <artifactId>godikit-exception</artifactId>
+  <version>1.0.0</version>
 </dependency>
 ```
 
@@ -65,31 +65,31 @@ English
 ```java
 // Implement ErrorCode interface with enum
 public enum MyErrorCode implements ErrorCode {
-    USER_NOT_FOUND("10001", "User Not Found"),
-    INVALID_PARAM("10002", "Invalid Parameter");
+  USER_NOT_FOUND("10001", "User Not Found"),
+  INVALID_PARAM("10002", "Invalid Parameter");
 
-    private final String code;
-    private final String description;
+  private final String code;
+  private final String description;
 
-    MyErrorCode(String code, String description) {
-        this.code = code;
-        this.description = description;
-    }
+  MyErrorCode(String code, String description) {
+    this.code = code;
+    this.description = description;
+  }
 
-    @Override
-    public String getName() {
-        return name();
-    }
+  @Override
+  public String getName() {
+    return name();
+  }
 
-    @Override
-    public String getCode() {
-        return code;
-    }
+  @Override
+  public String getCode() {
+    return code;
+  }
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
+  @Override
+  public String getDescription() {
+    return description;
+  }
 }
 ```
 
@@ -104,11 +104,11 @@ com.example.myapp.MyErrorCodeProvider
 
 ```java
 public class MyErrorCodeProvider implements ErrorCodeProvider {
-    @Override
-    public void register(List<ErrorCode> codes) {
-        codes.add(MyErrorCode.USER_NOT_FOUND);
-        codes.add(MyErrorCode.INVALID_PARAM);
-    }
+  @Override
+  public void register(List<ErrorCode> codes) {
+    codes.add(MyErrorCode.USER_NOT_FOUND);
+    codes.add(MyErrorCode.INVALID_PARAM);
+  }
 }
 ```
 
