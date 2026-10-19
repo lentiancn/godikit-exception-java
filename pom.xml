@@ -57,7 +57,6 @@
     <modules>
         <module>godikit-exception</module>
         <module>godikit-exception-jdk17</module>
-        <!--        <module>godikit-exception-jdk21</module>-->
     </modules>
 
     <dependencyManagement>
