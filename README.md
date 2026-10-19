@@ -6,22 +6,49 @@
 
 English
 
+## Why godikit-exception?
+
+| Scenario                            | Without godikit-exception             | With godikit-exception             |
+|-------------------------------------|---------------------------------------|------------------------------------|
+| Error code management               | Hardcoded constants scattered across classes | SPI-registered enum-based codes    |
+| Error code lookup                   | String matching or enum switch blocks | Direct enum access with rich metadata |
+| Exception type consistency          | Mixed checked/unchecked without rules | GlobalException + GlobalRuntimeException  |
+| Error message format                | Inconsistent across modules           | Unified `[source] [code description] message` |
+| Business error categorization       | Generic RuntimeException everywhere   | Retryable flag for fault-tolerant systems |
+
 ## Features
 
-- **Plugin-based Error Codes**: Use Java SPI to register error codes dynamically
+- **Plugin-based Error Codes**: JDK `ServiceLoader` auto-discovers error code providers — just add a JAR
 - **Two Exception Types**: `GlobalException` (checked) and `GlobalRuntimeException` (unchecked)
-- **Built-in Error Codes**: Common error codes included (`SYSTEM_ERROR`, `PARAM_ERROR`, etc.)
+- **Built-in Fallback**: Common error codes included out of the box (`SYSTEM_ERROR`, `PARAM_ERROR`, etc.)
 - **Unified Error Format**: Consistent error message format across applications
-- **Stack Trace Utilities**: Convert stack traces to strings easily
+- **Stack Trace Utilities**: Convert stack traces to strings with one call
 - **Retryable Support**: Flag exceptions as retryable for fault-tolerant systems
 
-## Modules
+## Architecture
 
-| Module              | Purpose                                                                        |
-|---------------------|--------------------------------------------------------------------------------|
-| `godikit-exception` | Core API (ErrorCode, GlobalException, GlobalRuntimeException, StackTraceUtils) |
+```
+┌──────────────────────────────────────────────────────────────┐
+│                         godikit-exception                     │
+│  (Core API: ErrorCode interface + GlobalException types)     │
+│  Built-in error codes: BaseErrorCode                         │
+└──────────────────────────────────────────────────────────────┘
+                              ▲
+                      ServiceLoader
+                              │
+┌──────────────────────────────────────────────────────────────┐
+│        Your Application                                       │
+│  Custom ErrorCodeProvider → registers custom error codes       │
+│  Configured via META-INF/services/ErrorCodeProvider          │
+└──────────────────────────────────────────────────────────────┘
+```
 
-## Quick Start
+## Requirements
+
+- Java 8+
+- Maven 3.6+
+
+## Usage
 
 ### Maven
 
@@ -32,8 +59,6 @@ English
     <version>1.0.0</version>
 </dependency>
 ```
-
-## Usage
 
 ### Define Error Codes
 
@@ -68,7 +93,7 @@ public enum MyErrorCode implements ErrorCode {
 }
 ```
 
-### Register Error Code Provider
+### Register Error Code Provider (Optional)
 
 Create SPI configuration file:
 
@@ -90,7 +115,7 @@ public class MyErrorCodeProvider implements ErrorCodeProvider {
 ### Throw and Catch Exceptions
 
 ```java
-// Throw exception
+// Throw unchecked exception
 throw new GlobalRuntimeException(MyErrorCode.USER_NOT_FOUND);
 
 // Or with message
@@ -120,9 +145,7 @@ String stackTrace = StackTraceUtils.toString(exception);
 ```java
 // Mark an exception as retryable
 throw new GlobalRuntimeException(MyErrorCode.NETWORK_ERROR)
-    .
-
-setRetryable(true);
+    .setRetryable(true);
 ```
 
 ## Built-in Error Codes
@@ -137,11 +160,6 @@ The library includes common error codes in `BaseErrorCode`:
 | 000020 | PARAM_ERROR         | Parameter error        |
 | 000021 | PARAM_MISSING_ERROR | Required param missing |
 | 000022 | PARAM_INVALID_ERROR | Invalid param value    |
-
-## Requirements
-
-- Java 8+
-- Maven 3.6+
 
 ## License
 
