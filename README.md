@@ -4,7 +4,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/lentiancn/godikit-exception-java.svg)](https://codecov.io/gh/lentiancn/godikit-exception-java)
 [![GitHub Release](https://img.shields.io/github/tag/lentiancn/godikit-exception-java.svg?label=release)](https://github.com/lentiancn/godikit-exception-java/releases)
 
-English
+English | [简体中文](README_zh-Hans.md) | [繁體中文](README_zh-Hant.md)
 
 ## Why godikit-exception?
 
