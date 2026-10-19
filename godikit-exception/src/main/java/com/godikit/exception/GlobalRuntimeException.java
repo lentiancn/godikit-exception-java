@@ -205,9 +205,9 @@ public class GlobalRuntimeException extends RuntimeException {
             return null;
         }
         return new GlobalException(
-                exception.getMessage(),
-                exception.getCause(),
-                exception.getErrorCode()
+            exception.getMessage(),
+            exception.getCause(),
+            exception.getErrorCode()
         ).setRetryable(exception.isRetryable);
     }
 
@@ -239,7 +239,7 @@ public class GlobalRuntimeException extends RuntimeException {
         }
 
         return "[" + errorSource + "]" +
-                " [" + errorCodeStr + "] " +
-                super.toString();
+            " [" + errorCodeStr + "] " +
+            super.toString();
     }
 }

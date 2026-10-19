@@ -210,9 +210,9 @@ public class GlobalException extends Exception {
             return null;
         }
         return new GlobalRuntimeException(
-                exception.getMessage(),
-                exception.getCause(),
-                exception.getErrorCode()
+            exception.getMessage(),
+            exception.getCause(),
+            exception.getErrorCode()
         ).setRetryable(exception.isRetryable);
     }
 
@@ -244,7 +244,7 @@ public class GlobalException extends Exception {
         }
 
         return "[" + errorSource + "]" +
-                " [" + errorCodeStr + "] " +
-                super.toString();
+            " [" + errorCodeStr + "] " +
+            super.toString();
     }
 }

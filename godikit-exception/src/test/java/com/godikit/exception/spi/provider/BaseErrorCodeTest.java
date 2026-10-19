@@ -88,9 +88,9 @@ class BaseErrorCodeTest {
     @Test
     void allCodes_ShouldHaveUniqueCode() {
         long uniqueCount = java.util.Arrays.stream(BaseErrorCode.values())
-                .map(BaseErrorCode::getCode)
-                .distinct()
-                .count();
+            .map(BaseErrorCode::getCode)
+            .distinct()
+            .count();
         assertEquals(BaseErrorCode.values().length, uniqueCount);
     }
 
@@ -98,7 +98,7 @@ class BaseErrorCodeTest {
     void allCodes_ShouldHaveValidSixDigitCode() {
         for (BaseErrorCode errorCode : BaseErrorCode.values()) {
             assertTrue(errorCode.getCode().matches("\\d{6}"),
-                    "Code should be 6 digits: " + errorCode.getCode());
+                "Code should be 6 digits: " + errorCode.getCode());
         }
     }
 
