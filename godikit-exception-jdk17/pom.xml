@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>com.godikit.exception</groupId>
-        <artifactId>godikit-parent</artifactId>
+        <artifactId>godikit-exception-parent</artifactId>
         <version>${revision}</version>
         <relativePath>../godikit-exception/pom.xml</relativePath>
     </parent>
