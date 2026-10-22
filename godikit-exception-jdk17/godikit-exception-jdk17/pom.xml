@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.godikit.exception</groupId>
+        <artifactId>godikit-exception-parent-jdk17</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>godikit-exception-jdk17</artifactId>
+    <version>${revision}</version>
+    <name>GodiKit Exception (JDK17)</name>
+    <description>
+        An exception utility package for JDK 17+, designed to unify the management of exception components in Java
+        projects
+        and establish a consistent standard.
+    </description>
+    <url>https://www.godikit.com/exception</url>
+
+    <properties>
+        <godikit.java.version>17</godikit.java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.godikit.exception</groupId>
+            <artifactId>godikit-exception</artifactId>
+        </dependency>
+    </dependencies>
+
+    <developers>
+        <developer>
+            <name>Len (田隆)</name>
+            <email>len@godikit.com</email>
+            <url>https://github.com/lentiancn</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://raw.githubusercontent.com/lentiancn/godikit-exception-java/refs/heads/main/LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/lentiancn/godikit-exception-java</url>
+        <connection>scm:git:https://github.com/lentiancn/godikit-exception-java.git</connection>
+        <developerConnection>scm:git:git@github.com:lentiancn/godikit-exception-java.git</developerConnection>
+    </scm>
+</project>

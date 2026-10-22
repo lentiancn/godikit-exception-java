@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>com.godikit.exception</groupId>
-        <artifactId>godikit-exception-parent</artifactId>
+        <artifactId>godikit-parent</artifactId>
         <version>${revision}</version>
     </parent>
 
