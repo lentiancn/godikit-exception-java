@@ -13,11 +13,9 @@
     <artifactId>godikit-exception-parent-jdk17</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>GodiKit Exception Parent (JDK17)</name>
-    <description>
-        An exception utility package for JDK 8+, designed to unify the management of exception components in Java
-        projects
-        and establish a consistent standard.
+    <name>GodiKit Exception Parent (JDK 17)</name>
+    <description>Aggregator module for the JDK 17 build of GodiKit Exception, grouping the JDK 17 compatibility
+        artifact that verifies the Java 17 bytecode target.
     </description>
     <url>https://www.godikit.com/exception</url>
 

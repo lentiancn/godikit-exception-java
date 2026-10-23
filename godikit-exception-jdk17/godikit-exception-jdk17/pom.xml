@@ -11,11 +11,9 @@
 
     <artifactId>godikit-exception-jdk17</artifactId>
     <version>${revision}</version>
-    <name>GodiKit Exception (JDK17)</name>
-    <description>
-        An exception utility package for JDK 17+, designed to unify the management of exception components in Java
-        projects
-        and establish a consistent standard.
+    <name>GodiKit Exception (JDK 17)</name>
+    <description>JDK 17 compatibility artifact of GodiKit Exception. Verifies that the exception API compiles and
+        runs against the Java 17 toolchain while keeping the JDK 8 line as the baseline dependency.
     </description>
     <url>https://www.godikit.com/exception</url>
 

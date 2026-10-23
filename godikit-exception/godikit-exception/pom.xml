@@ -12,10 +12,9 @@
     <artifactId>godikit-exception</artifactId>
     <version>${revision}</version>
     <name>GodiKit Exception</name>
-    <description>
-        An exception utility package for JDK 8+, designed to unify the management of exception components in Java
-        projects
-        and establish a consistent standard.
+    <description>Core API artifact of GodiKit Exception for JDK 8+. Defines the ErrorCode contract, the
+        GlobalException and GlobalRuntimeException base classes, and the ErrorCodeRegistry that discovers error
+        code providers through the JDK ServiceLoader mechanism.
     </description>
     <url>https://www.godikit.com/exception</url>
 
