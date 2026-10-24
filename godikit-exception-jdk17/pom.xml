@@ -20,42 +20,7 @@
     <url>https://www.godikit.com/exception</url>
 
     <properties>
-        <revision>1.0.0</revision>
-        <godikit.charset>UTF-8</godikit.charset>
-        <godikit.java.version>8</godikit.java.version>
-
-        <java.version>${godikit.java.version}</java.version>
-        <maven.compiler.source>${godikit.java.version}</maven.compiler.source>
-        <maven.compiler.target>${godikit.java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>${godikit.charset}</project.build.sourceEncoding>
-        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
-
-        <!-- central-publishing-maven-plugin -->
-        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
-        <!-- flatten-maven-plugin -->
-        <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
-        <!-- jacoco-maven-plugin -->
-        <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
-        <!-- maven-compiler-plugin -->
-        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
-        <maven-compiler-plugin.encoding>${godikit.charset}</maven-compiler-plugin.encoding>
-        <!-- maven-deploy-plugin.version -->
-        <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-        <!-- maven-gpg-plugin -->
-        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <!-- maven-jar-plugin -->
-        <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
-        <!-- maven-javadoc-plugin -->
-        <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-        <maven-javadoc-plugin.source>${godikit.java.version}</maven-javadoc-plugin.source>
-        <maven-javadoc-plugin.encoding>${godikit.charset}</maven-javadoc-plugin.encoding>
-        <maven-javadoc-plugin.docencoding>${godikit.charset}</maven-javadoc-plugin.docencoding>
-        <maven-javadoc-plugin.charset>${godikit.charset}</maven-javadoc-plugin.charset>
-        <!-- maven-resources-plugin -->
-        <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
-        <maven-resources-plugin.encoding>${godikit.charset}</maven-resources-plugin.encoding>
-        <!-- maven-source-plugin -->
-        <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+        <godikit.java.version>17</godikit.java.version>
     </properties>
 
     <modules>
