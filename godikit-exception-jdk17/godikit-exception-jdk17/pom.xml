@@ -17,10 +17,6 @@
     </description>
     <url>https://www.godikit.com/exception</url>
 
-    <properties>
-        <godikit.java.version>17</godikit.java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.godikit.exception</groupId>
